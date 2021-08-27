@@ -1,0 +1,334 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a:focus,
+a:active {
+    outline: none;
+}
+
+
+html,
+body {
+    font-size: 16px;
+}
+
+nav,
+footer,
+header,
+aside {
+    display: block;
+    z-index: 1;
+}
+
+a {
+    color: unset;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+}
+
+input,
+button,
+textarea {
+    font-family: inherit;
+}
+
+input::-ms-clear {
+    display: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+button::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+a,
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+ul li {
+    list-style: none;
+}
+
+img {
+    vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: inherit;
+    font-weight: 400;
+}
+
+/*--------------------*/
+
+// Font ===========================
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,regular,italic,600,600italic,700,700italic,800,800italic&display=swap&subset=cyrillic-ext);
+@import url(https://fonts.googleapis.com/css?family=Montserrat:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&display=swap&subset=cyrillic-ext);
+// END Font ===========================
+
+
+// IMPORT SCSS
+
+// END IMPORT SCSS
+
+// Variables ===========================
+$maxWidth: 1440;
+$maxWidthContainer: 1200;
+// END Variables ===========================
+
+// MIXIN ===================
+@mixin adaptivValue($property, $startSize, $minSize) {
+    $addSize: $startSize - $minSize;
+    $addMobSize: $startSize + $startSize * 0.7;
+
+    @media (max-width: 1440px) {
+        // #{$property}: calc(#{$minSize + px} + #{$addMobSize} * ((100vw - 320px) / #{$maxWidth}));
+
+        #{$property}: calc(#{$minSize + px} + #{$addSize} * ((100vw - 320px) / (#{$maxWidth} - 320)));
+    }
+
+    @media (min-width: 1440px) {
+        #{$property}: $startSize + px;
+    }
+}
+
+@mixin flexbox($direction, $justify, $align) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+}
+
+// END MIXIN ===================
+
+.page {
+    height: 100vh;
+    @include flexbox(row, center, center);
+
+}
+
+._container {
+    max-width: $maxWidthContainer + px;
+    width: 100%;
+    margin: 0 auto;
+
+    @media (max-width: 1200px) {
+        max-width: none;
+        padding: 0 20px;
+    }
+}
+
+
+.todo {
+    font-family: 'Montserrat', sans-serif;
+
+    margin: auto;
+    background-color: #FFB830;
+    // height: 90vh;
+    width: 90%;
+    padding: .65em;
+    border-radius: .95em;
+    box-shadow: 20px 20px 60px #afafaf, -20px -20px 60px #ffffff;
+
+    &__title {
+        @include adaptivValue(font-size, 36, 18);
+        margin-top: 0.5em;
+        color: white;
+        font-weight: 700;
+    }
+
+    &__status {
+        @include flexbox(row, space-between, center);
+        
+        @include adaptivValue(margin-top, 30, 12);
+    }
+
+    &__list-item {
+        @include flexbox(row, space-between, center);
+        font-size: 24px;
+    }
+
+    &__select {
+        
+        @include adaptivValue(font-size, 16, 12);
+        font-family: sans-serif;
+        font-weight: 700;
+        color: #444;
+        line-height: 1.3;
+        padding: .6em 1.4em .5em .8em;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        margin: 0;
+        border: 1px solid #aaa;
+        box-shadow: 0 1px 0 1px rgba(0, 0, 0, .04);
+        border-radius: .5em;
+    }
+
+    &__list {
+        @include adaptivValue(margin-top, 30, 12);
+        height: 45vh;
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            background-color: #F5F5F5;
+        }
+
+        &::-webkit-scrollbar {
+            width: 10px;
+            background-color: #F5F5F5;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #000000;
+            border: 2px solid #555555;
+        }
+
+    }
+
+    &__form {
+        position: relative;
+        @include adaptivValue(font-size, 24, 12);
+        
+        margin: 1.25em 0;
+        height: 2.5em;
+    }
+
+    &__input {
+        @include adaptivValue(font-size, 24, 12);
+        color: white;
+        height: 30px;
+
+        width: 100%;
+        background: transparent;
+        border: 0px;
+        border-bottom: 2px solid #3db2ff;
+
+        position: relative;
+
+        outline: none;
+
+        &::placeholder {
+            
+            @include adaptivValue(font-size, 24, 12);
+            color: white;
+        }
+
+    }
+
+    &__btn {
+        
+        // @include adaptivValue(font-size, 12, 8);
+        cursor: pointer;
+        position: absolute;
+        right: 2px;
+        top: 0;
+        padding: 0.3em 0.8em;
+        font-family: 'Bebas Neue', cursive;
+        background: linear-gradient(45deg, transparent 5%, #3db2ff 5%);
+        border: 0;
+        color: #fff;
+        letter-spacing: 3px;
+        box-shadow: 2px 0px 0;
+    }
+
+}
+
+.status {
+    @include adaptivValue(font-size, 24, 12);
+    padding: .42em;
+    border-radius: .335em;
+    color: #ffffff;
+
+    &_total {
+        background-color: #3db2ff;
+    }
+
+    &_success {
+        background-color: #75c915;
+    }
+
+    &_deleted {
+        background-color: #FF2442;
+    }
+}
+
+
+.list-item {
+    @include adaptivValue(font-size, 24, 12);
+    &__id {
+        // margin: 0 .42em;
+        margin-left: .42em;
+        margin-right: .85em;
+    }
+
+    &__title {
+        display: flex;
+        align-items: center;
+        width: 50%;
+    }
+
+    &__delete {
+        margin: .42em;
+        position: relative;
+
+        border: 0px;
+        background: transparent;
+        width: 1.67em;
+        height: 1.67em;
+
+        &::after {
+            content: '';
+            background-size: contain;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1.46em;
+            height: 1.46em;
+            background-image: url(../../assets/delete.svg);
+            background-repeat: no-repeat;
+        }
+    }
+
+    &__edit {
+
+        margin: .42em;
+        position: relative;
+        border: 0px;
+        width: 1.67em;
+        height: 1.67em;
+
+        background: transparent;
+
+        &::after {
+            content: '';
+            background-size: contain;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1.46em;
+            height: 1.46em;
+            background-image: url(../../assets/pencil.svg);
+            background-repeat: no-repeat;
+        }
+    }
+}
